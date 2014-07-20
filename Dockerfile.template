@@ -1,0 +1,21 @@
+FROM ubuntu:14.04
+
+MAINTAINER Ian Babrou <ibobrik@gmail.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN sudo apt-get update
+RUN sudo apt-get install -y netatalk avahi-daemon supervisor
+
+RUN useradd %login% -M
+RUN /bin/sh -c "echo %login%:%password% | chpasswd"
+
+RUN echo "- -tcp -noddp -uamlist uams_randnum.so,uams_dhx.so,uams_dhx2.so -nosavepassword" >> /etc/netatalk/afpd.conf
+RUN echo "/share %name% allow:%login% cnidscheme:dbd options:usedots,upriv,tm" >> /etc/netatalk/AppleVolumes.default
+
+RUN mkdir -p /var/log/supervisor
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 548
+
+CMD chown %login% /share && /usr/bin/supervisord -n
