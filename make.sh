@@ -23,3 +23,5 @@ IMAGE="time-container-${LOWER_NAME}"
 
 echo "building image ${IMAGE}"
 docker build -t ${IMAGE} .
+
+echo ">> run: docker run -d -p <docker_host_ip>:548:548 -v <docker_host_dir>:/share time-container-<share_name>"
