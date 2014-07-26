@@ -5,7 +5,7 @@ Time capsule and apple share in docker.
 ## Building
 
 ```
-./make.sh share_name login password
+./make.sh <share_name> <login> <password> <max_size_in_mb>
 ```
 
 This will make image `time-container-<share_name>`.
@@ -26,6 +26,8 @@ press `Connect`. Enter login and password you supplied at
 the build stage.
 
 That's it!
+
+Note that Time Machine will not work on non-standard port, so use 548.
 
 ## Time machine
 
