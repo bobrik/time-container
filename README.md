@@ -2,18 +2,13 @@
 
 Time capsule and apple share in docker.
 
-## Building
-
-```
-./make.sh <share_name> <login> <password> <max_size_in_mb>
-```
-
-This will make image `time-container-<share_name>`.
-
 ## Running
 
 ```
-docker run -d -p <docker_host_ip>:548:548 -v <docker_host_dir>:/share time-container-<share_name>
+docker run -d -p <docker_host_ip>:548:548 -v <docker_host_dir>:/share \
+  -e AFPD_LOGIN=<login> -e AFPD_PASSWORD=<password> \
+  -e AFPD_NAME="<share name>" -e AFPD_SIZE_LIMIT=<size limit in mb if needed> \
+  --name <container name> time-container
 ```
 
 This will bind `afpd` to docker host ip address and mount
@@ -27,9 +22,9 @@ the build stage.
 
 That's it!
 
-Note that Time Machine will not work on non-standard port, so use 548.
-
 ## Time machine
+
+Note that Time Machine will not work on non-standard port, so use 548.
 
 You may need to run the following command to enable Time machine backups:
 
