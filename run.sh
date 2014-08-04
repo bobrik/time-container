@@ -34,4 +34,4 @@ fi
 
 chown $AFPD_LOGIN /share
 
-exec /usr/bin/supervisord -n
+exec ionice -c 3 /usr/bin/supervisord -n
